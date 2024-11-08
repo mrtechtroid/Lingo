@@ -8,6 +8,7 @@ require('dotenv').config();
 require("./models/db");
 const APIRouter = require("./routes/APIRoutes");
 const UserRouter = require("./routes/UserRoutes")
+const LevelRouter = require("./routes/LevelRoutes")
 const app = express();
 const PORT = process.env.PORT || 8080;
 const {generateResponse} = require("./controllers/Gemini");
@@ -28,6 +29,7 @@ app.use("/auth", AuthRouter);
 app.use("/api_r", APIRouter);
 app.post("/generate",generateResponse);
 app.use("/user",UserRouter);
+app.use("/level",LevelRouter);
 // mongoose.connect(process.env.MONGODB_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,

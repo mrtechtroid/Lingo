@@ -1,3 +1,4 @@
+
   const { GoogleGenerativeAI, SchemaType } = require('@google/generative-ai');
   const dotenv = require('dotenv');
   dotenv.config();
@@ -22,7 +23,7 @@
           type: SchemaType.ARRAY,
           items: {
             type: SchemaType.STRING,
-            description: "Related options of word in english",
+            description: "Related options of word in hindi",
             nullable: false,
           },
           description: "Array of words differnt in meaning to word but not very different",
@@ -51,7 +52,7 @@
 
       // Process each word in the wordList
       const responses = await Promise.all(wordList.map(async (word) => {
-        const prompt = `Translate "${word}" to hindi, provide 3 other words in english different in meaning to word but not very different`;
+        const prompt = `Translate "${word}" to hindi, provide 3 other words in hindi different in meaning to word but of the same word type`;
         const result = await model.generateContent(prompt);
         console.log(result.response.text());
 

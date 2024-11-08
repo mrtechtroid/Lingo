@@ -40,6 +40,10 @@ const UserSchema = new mongoose.Schema({
     // required: true,
     default: "English",
   },
+  lesson:{
+    type: String,
+    //required: true,
+  },
   level:{
     type: Number,
     // required: true,
