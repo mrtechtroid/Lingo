@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const languages = [
-  "English","Hindi", "Mexican", "Punjabi"
+  "English","Hindi", "Spanish", "Punjabi"
 ]
 const flag = [
     "flag_1", "flag_2", "flag_3", "flag_2"
