@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const LessonSchema = new mongoose.Schema({
-    id:{
-        type: Number,
-        required: true,
-    },
     scenario:{
         type: String,
         required: true,
