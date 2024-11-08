@@ -14,18 +14,37 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  referral: {
+  experience:{
+    type: Integer,
+    // required: true,
+    default: 0,
+    min: 0,
+  },
+  hearts:{
+    type: Integer,
+    // required: true,
+    default: 0,
+    min: 0,
+  },
+  referrer:{
     type: String,
-    enum: ["family or friend", "company", "internet suggested", "other"],
-    required: false,
+    // required: true,
+    default: "No Referrer",
   },
-  experience: {
-    type: Int16Array,
-    required: true,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
-  level: {
-    type: Int16Array,
-    required: true,
+  language:{
+    type: String,
+    // required: true,
+    default: "English",
+  },
+  level:{
+    type: Int,
+    // required: true,
+    default: 1,
+    min: 1,
   }
 });
 

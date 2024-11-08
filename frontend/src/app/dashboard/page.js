@@ -18,6 +18,7 @@ import {
   Settings
 } from 'lucide-react'
 import Image from 'next/image'
+import withAuth from '../components/withAuth'
 const tabs = ['Learn', 'Rankings', 'Shop', 'Profile']
 const units = [
   {
@@ -56,7 +57,7 @@ const units = [
   }
 ]
 
-export default function Component() {
+function Component() {
   const [activeTab, setActiveTab] = useState('Learn')
   const [xp, setXp] = useState(0)
   const dailyGoal = 10
@@ -221,3 +222,4 @@ export default function Component() {
     </div>
   )
 }
+export default withAuth(Component)
