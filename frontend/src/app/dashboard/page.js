@@ -18,7 +18,6 @@ import {
   Settings
 } from 'lucide-react'
 import Image from 'next/image'
-import withAuth from '../components/withAuth'
 const tabs = ['Learn', 'Rankings', 'Shop', 'Profile']
 const units = [
   {
@@ -222,4 +221,4 @@ function Component() {
     </div>
   )
 }
-export default withAuth(Component)
+export default Component
