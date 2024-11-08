@@ -15,13 +15,13 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   experience:{
-    type: Integer,
+    type: Number,
     // required: true,
     default: 0,
     min: 0,
   },
   hearts:{
-    type: Integer,
+    type: Number,
     // required: true,
     default: 0,
     min: 0,
@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema({
     default: "English",
   },
   level:{
-    type: Int,
+    type: Number,
     // required: true,
     default: 1,
     min: 1,

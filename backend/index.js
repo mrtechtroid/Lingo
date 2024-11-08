@@ -7,6 +7,7 @@ const AuthRouter = require("./routes/AuthRouter");
 require('dotenv').config();
 require("./models/db");
 const APIRouter = require("./routes/APIRoutes");
+const UserRouter = require("./routes/UserRoutes")
 const app = express();
 const PORT = process.env.PORT || 8080;
 const {generateResponse} = require("./controllers/Gemini");
@@ -26,6 +27,7 @@ app.use(cors());
 app.use("/auth", AuthRouter);
 app.use("/api_r", APIRouter);
 app.post("/generate",generateResponse);
+app.use("/user",UserRouter);
 // mongoose.connect(process.env.MONGODB_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
