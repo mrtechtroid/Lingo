@@ -10,8 +10,8 @@ const questions = [
     type: 'NEW_WORD',
     question: "Which one of these is 'the cat'?",
     options: [
-      { id: 1, text: "l'homme", image: "/placeholder.svg?height=150&width=150" },
-      { id: 2, text: "le chat", image: "/placeholder.svg?height=150&width=150" }
+      { id: 1, text: "l'homme", image: "https://image.pollinations.ai/prompt/dog" },
+      { id: 2, text: "le chat", image: "https://image.pollinations.ai/prompt/cat" }
     ],
     correctAnswer: 2,
     newWord: true
@@ -125,8 +125,8 @@ export default function Level() {
   }, [currentQuestionIndex])
 
   const playSound = () => {
-    const audio = new Audio(type === 'success' ? '/success.mp3' : '/error.mp3')
-    audio.play()
+    // const audio = new Audio(type === 'success' ? '/success.mp3' : '/error.mp3')
+    // audio.play()
   }
 
   const handleCheck = () => {
@@ -168,7 +168,11 @@ export default function Level() {
       setTimeout(() => setShowError(false), 2000)
     }
   }
-
+  useEffect(()=>{
+    if (hearts<=0){
+      alert("You have no hearts left. To continue further. ")
+    }
+  },[hearts])
   const handleSkip = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
@@ -373,7 +377,7 @@ export default function Level() {
           <X className="w-6 h-6" />
         </button>
         <div className="flex items-center gap-2">
-          {[...Array(hearts)].map((_, i) => (
+          {hearts>=0 && [...Array(hearts)].map((_, i) => (
             <Heart key={i} className="w-6 h-6 text-red-500 fill-current" />
           ))}
         </div>

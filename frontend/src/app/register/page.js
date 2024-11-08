@@ -28,7 +28,8 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#235390] flex flex-col items-center justify-center p-4">
+    <div style={{backgroundImage:"url(Designer.jpeg)"}}>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{backdropFilter:"blur(2px)"}}>
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex justify-center mb-6">
@@ -102,6 +103,7 @@ const Register = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   )
 };

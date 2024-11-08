@@ -1,16 +1,4 @@
-import localFont from "next/font/local";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -24,6 +12,7 @@ export default function RootLayout({ children }) {
       <link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" crossOrigin="anonymous"></link>
       <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="icon"  href="/logo.png"/>
 
       <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"></link>
 </head>

@@ -17,28 +17,31 @@ const Login = () => {
       const res = await axios.post('http://localhost:8080/auth/login', {
         email,
         password,
-      });
-      localStorage.setItem('token', res.data.token); // Store JWT in localStorage
-      alert('Login successful!');
-      router.push("/dashboard")
+      }).then((res) => {
+        console.log(res.data)
+        localStorage.setItem('token', res.data.jwtToken); // Store JWT in localStorage
+        alert('Login successful!');
+        router.push("/dashboard")
+      })
     } catch (err) {
       setError('Invalid email or password.' + err.message);
     }
   };
   return (
-    <div className="min-h-screen bg-[#235390] flex flex-col items-center justify-center p-4">
+    <div style={{backgroundImage:"url(Designer.jpeg)"}}>
+    <div className="min-h-screen  flex flex-col items-center justify-center p-4" style={{backdropFilter:"blur(2px)"}}>
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex justify-center mb-6">
             <Image
               src="/logo.png"
-              alt="Duolingo Logo"
+              alt="Lingo Logo"
               width={64}
               height={64}
               priority
             />
           </div>
-          <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">Log in to Duolingo</h1>
+          <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">Log in to Lingo</h1>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
             {error && <p className="nes-text is-error">{error}</p>}
@@ -86,6 +89,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   )
 };

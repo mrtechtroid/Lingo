@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
+import { useRouter } from 'next/navigation'
 const languages = [
   "English","Hindi", "Spanish", "Punjabi"
 ]
@@ -10,10 +10,10 @@ const flag = [
     "flag_1", "flag_2", "flag_3", "flag_2"
 ]
 const proficiencyLevels = [
-  { value: "beginner", label: "Beginner - No prior knowledge" },
-  { value: "basic", label: "Basic - Know a few words" },
-  { value: "intermediate", label: "Intermediate - Can form simple sentences" },
-  { value: "advanced", label: "Advanced - Conversational skills" }
+  { value: 1, label: "Beginner - No prior knowledge" },
+  { value: 2, label: "Basic - Know a few words" },
+  { value: 3, label: "Intermediate - Can form simple sentences" },
+  { value: 4, label: "Advanced - Conversational skills" }
 ]
 
 const referralSources = [
@@ -25,7 +25,8 @@ export default function OnboardingPage() {
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [proficiency, setProficiency] = useState('')
   const [referral, setReferral] = useState('')
-
+  const router = useRouter();
+  const [submitted, setSubmitted] = useState(false);
   const nextStep = () => setStep((prev) => prev + 1)
   const prevStep = () => setStep((prev) => prev - 1)
 
@@ -103,15 +104,30 @@ export default function OnboardingPage() {
       ))}
     </motion.div>
   ]
-
-  const handleSubmit = () => {
-    console.log('Onboarding complete:', { selectedLanguage, proficiency, referral })
-
-    // Here you would typically send this data to your backend or perform further actions
-  }
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8080/user/setonboarding', {
+        "language":selectedLanguage,
+        "level": proficiency,
+        "referral":referral
+      });
+      setSuccess(true);
+      setError('');
+      router.push("/dashboard")
+      setSubmitted(true);
+    } catch (err) {
+      setError('Onboarding failed.' + err?.message);
+      setSuccess('false')
+      setSubmitted(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#235390] flex flex-col items-center justify-center p-4">
+    <div style={{backgroundImage:"url(Designer.jpeg)"}}>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{backdropFilter:"blur(2px)"}}>
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="p-6 sm:p-8">
           <AnimatePresence mode="wait">
@@ -141,7 +157,7 @@ export default function OnboardingPage() {
               <button 
                 onClick={handleSubmit} 
                 className="ml-auto px-4 py-2 bg-[#58CC02] hover:bg-[#58CC02]/90 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#58CC02]"
-                disabled={!referral}
+                disabled={submitted}
               >
                 Finish
               </button>
@@ -149,6 +165,7 @@ export default function OnboardingPage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

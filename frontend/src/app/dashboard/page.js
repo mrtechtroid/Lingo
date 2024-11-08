@@ -1,21 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 import { 
-  Home, 
-  Store, 
-  User, 
-  MoreHorizontal, 
   Star, 
   Book, 
   Lock, 
-  Dumbbell,
   Zap,
-  ChevronRight,
-  Trophy,
-  Users,
-  Settings
+  LogOut,
 } from 'lucide-react'
 import Image from 'next/image'
 const tabs = ['Learn', 'Rankings', 'Shop', 'Profile']
@@ -59,6 +53,26 @@ const units = [
 function Component() {
   const [activeTab, setActiveTab] = useState('Learn')
   const [xp, setXp] = useState(0)
+  const [user, setUser] = useState({})
+  const router = useRouter();
+  const [token, setToken] = useState('')
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setToken(token)
+  }, [])
+  useEffect(() => {
+    console.log(token)
+    async function getUser(){
+      await axios.get('http://localhost:8080/user/get',{ headers:{"authorization":token}}).then((res) => {
+        setUser(res.data)
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
+    getUser()
+  }, [token]) 
   const dailyGoal = 10
 
   const renderTabContent = () => {
@@ -120,7 +134,10 @@ function Component() {
         return null
     }
   }
-
+  function signOut(){
+    localStorage.removeItem('token')
+    router.push("/")
+  }
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex">
       {/* Left Sidebar */}
@@ -148,6 +165,13 @@ function Component() {
             <span className="font-bold text-lg">{tab.toUpperCase()}</span>
           </button>
         ))}
+        <button
+            onClick={signOut}
+            className={`flex items-center gap-3 p-3 rounded-xl 'hover:bg-gray-100 text-gray-500'`}
+          >
+            <Image src="/icons/green/power_green.png" width={24} height={24} alt="logout" />
+            <span className="font-bold text-lg" >LOGOUT</span>
+          </button>
       </nav>
 
       {/* Main Content */}
@@ -161,17 +185,17 @@ function Component() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-[#FF9600] rounded-lg" />
-            <span className="font-bold">BENGALI</span>
+            {user && <span className="font-bold">{user.language}</span>}
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-                <Image src = "/icons/red/Heart_Red.png" width={24} height = {24}></Image>
+                <Image src = "/icons/red/Heart_Red.png" width={24} height = {24} alt = "heart"></Image>
               {/* <div className="w-6 h-6 rounded-full bg-gray-200" /> */}
-              <span>5</span>
+              {user && <span>{user.hearts}</span>}
             </div>
             <div className="flex items-center gap-1">
-            <Image src = "/icons/red/Crown_Red.png" width={24} height = {24}></Image>
-              <span>0</span>
+            <Image src = "/icons/red/Crown_Red.png" width={24} height = {24} alt = "crown"></Image>
+              {user && <span>{user.experience}</span>}
             </div>
           </div>
         </div>
