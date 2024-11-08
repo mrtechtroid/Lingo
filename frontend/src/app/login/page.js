@@ -4,8 +4,9 @@ import axios from 'axios';
 import Image from 'next/image';
 import Button from '../components/Button';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 const Login = () => {
-
+    const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,8 +20,9 @@ const Login = () => {
       });
       localStorage.setItem('token', res.data.token); // Store JWT in localStorage
       alert('Login successful!');
+      router.push("/dashboard")
     } catch (err) {
-      setError('Invalid email or password.');
+      setError('Invalid email or password.' + err.message);
     }
   };
   return (
@@ -37,7 +39,7 @@ const Login = () => {
             />
           </div>
           <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">Log in to Duolingo</h1>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
             {error && <p className="nes-text is-error">{error}</p>}
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
