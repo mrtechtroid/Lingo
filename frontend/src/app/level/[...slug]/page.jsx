@@ -218,7 +218,7 @@ export default function Level() {
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <img src={option.image} alt={option.text} className="w-full h-32 object-cover rounded-lg mb-2" />
+                  <img src={option.image} alt={option.text} className="w-full h-32 object-cover rounded-lg mb-2 " />
                   <p className="text-center font-medium">{option.text}</p>
                 </button>
               ))}

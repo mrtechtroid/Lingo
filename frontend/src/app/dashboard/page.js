@@ -258,6 +258,7 @@ function Component() {
     }
     getLeaderboard();
   }, [token]);
+  
   async function handleExchangeHearts(token) {
     // alert("Exchange Hearts")
     await axios
@@ -277,7 +278,7 @@ function Component() {
         }
       });
   }
-  const dailyGoal = 10;
+  const dailyGoal = 50;
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -306,7 +307,7 @@ function Component() {
                         key={lesson.id}
                         onClick={()=>{if (lesson.status!="locked"){router.push(lesson.url)}}}
                         className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
-                          index % 2 === 0 ? "-translate-x-8" : "translate-x-8"
+                          index % 2 === 0 ? "-translate-x-12" : "translate-x-12"
                         } ${
                           lesson.status === "completed"
                             ? "bg-[#58CC02] text-white"
@@ -344,6 +345,10 @@ function Component() {
             Discussion forum coming soon!
           </div>
         );
+      // case "Chat":
+      //   return (
+
+      //   );
       case "Rankings":
         return (<div className="p-6 bg-white rounded-2xl">
           <h2 className="text-2xl font-bold mb-4">Rankings</h2>
@@ -439,6 +444,14 @@ function Component() {
                 alt="book"
               />
             )}
+            {tab === "Chat" && (
+              <Image
+                src="/icons/green/Letter R Yellow_Green.png"
+                width={24}
+                height={24}
+                alt="chat"
+              />
+            )}
             {/* {tab === 'Discuss' && <Image src="/users.png" width={24} height={24} alt="users" />} */}
             {tab === "Shop" && (
               <Image
@@ -513,17 +526,17 @@ function Component() {
           <h2 className="text-xl font-bold mb-4">Daily Quests</h2>
           <div className="flex items-center gap-3 mb-2">
             <Zap className="w-6 h-6 text-yellow-400" />
-            <span>Earn 10 XP</span>
+            <span>Earn {dailyGoal} XP</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex-1 h-3 bg-gray-100 rounded-full">
               <div
-                className="h-full bg-gray-300 rounded-full"
-                style={{ width: `${(xp / dailyGoal) * 100}%` }}
+                className="h-full bg-green-400 rounded-full"
+                style={{ width: `${(user.experience / dailyGoal) * 100}%` }}
               />
             </div>
             <span className="text-sm text-gray-500">
-              {xp}/{dailyGoal}
+              {user.experience}/{dailyGoal}
             </span>
           </div>
         </div>
@@ -540,18 +553,35 @@ function Component() {
               <div className="flex justify-between mb-1">
                 <span>Daily goal</span>
                 <span>
-                  {xp}/{dailyGoal} XP
+                  {user.experience}/{dailyGoal} XP
                 </span>
               </div>
               <div className="h-3 bg-gray-100 rounded-full">
                 <div
-                  className="h-full bg-gray-300 rounded-full"
-                  style={{ width: `${(xp / dailyGoal) * 100}%` }}
+                  className="h-full bg-green-400 rounded-full"
+                  style={{ width: `${(user.experience / dailyGoal) * 100}%` }}
                 />
               </div>
             </div>
           </div>
         </div>
+        <div className="bg-white rounded-2xl p-4 border mb-4">
+            
+            <h2 className="text-2xl font-bold mb-4 text-center">Profile</h2>
+            <div className="mb-6"> 
+            <center><Image className="w-24 h-24 rounded-full border" src={"https://api.dicebear.com/9.x/pixel-art/png?seed="+user.name} width={24} height = {24} alt = "heart"></Image>
+            </center>
+              <p className="text-gray-600 mb-4 text-center">
+                Name: {user.name}
+              </p>
+              <p className="text-gray-600 mb-4 text-center">
+                Language: {user.language}
+              </p>
+              <p className="text-gray-600 mb-4 text-center">
+                Crowns: {user.experience}
+              </p>
+            </div>
+          </div>
       </aside>
     </div>
   );
