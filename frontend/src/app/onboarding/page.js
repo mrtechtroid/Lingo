@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import axios from 'axios'
 const languages = [
-  "English","Hindi", "Spanish", "Punjabi"
+  "English","Hindi", "Spanish",
 ]
+// "Punjabi"
 const flag = [
     "flag_1", "flag_2", "flag_3", "flag_2"
 ]

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Star, Book, Lock, Zap, LogOut } from "lucide-react";
 import Image from "next/image";
-const tabs = ["Learn", "Rankings", "Shop", "Profile"];
+const tabs = ["Learn", "Rankings", "Shop",];
 // const units = [
 //   {
 //     id: 1,
@@ -167,9 +167,9 @@ function Component() {
   
       const lessons = Array.from({ length: unit.levels }, (_, i) => {
         let status;
-        if (unitCompleted || (isCurrentUnit && i < level)) {
+        if (unitCompleted || (isCurrentUnit && i <= level)) {
           status = 'completed';
-        } else if (isCurrentUnit && i === level) {
+        } else if (isCurrentUnit && i === level+1) {
           status = 'unlocked';
         } else {
           status = 'locked';
