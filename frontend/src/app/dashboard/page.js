@@ -197,10 +197,13 @@ function Component() {
     if (allLevels.length === 0){
       return
     }
+    if (!user.lesson){
+      return
+    }
     setUnits(convertUnits(allLevels,{lessonId:user.lesson,level:user.level}))
     console.log(allLevels)
     
-  },[allLevels,user])
+  },[JSON.stringify(allLevels),JSON.stringify(user)])
   useEffect(() => {
     console.log(token);
     async function getUser() {

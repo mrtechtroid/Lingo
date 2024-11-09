@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import axios from 'axios'
 const languages = [
   "English","Hindi", "Spanish", "Punjabi"
 ]
@@ -25,11 +27,15 @@ export default function OnboardingPage() {
   const [selectedLanguage, setSelectedLanguage] = useState('')
   const [proficiency, setProficiency] = useState('')
   const [referral, setReferral] = useState('')
+  const [token, setToken] = useState('')
   const router = useRouter();
   const [submitted, setSubmitted] = useState(false);
   const nextStep = () => setStep((prev) => prev + 1)
   const prevStep = () => setStep((prev) => prev - 1)
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setToken(token);
+  }, []);
   const steps = [
     // Step 1: Language Selection
     <motion.div
@@ -107,18 +113,25 @@ export default function OnboardingPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    console.log("hi")
+    // e.preventDefault();
     try {
       await axios.post('http://localhost:8080/user/setonboarding', {
         "language":selectedLanguage,
         "level": proficiency,
         "referral":referral
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        }
       });
       setSuccess(true);
       setError('');
       router.push("/dashboard")
       setSubmitted(true);
     } catch (err) {
+      console.log(err)
       setError('Onboarding failed.' + err?.message);
       setSuccess('false')
       setSubmitted(false);
