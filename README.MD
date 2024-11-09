@@ -2,7 +2,7 @@
   <br>
   <a href="https://github.com/mrtechtroid/lingo"><img src="frontend/public/logo.png" alt="Lingo" width="120"></a>
   <br>
-  <b>Ligno</b>
+  <b>Lingo</b>
   <br>
   <sub><sup><a href = "https://lingo.mtt.one"><b>Live Preview</b></a></sup></sub>
   <sub>
