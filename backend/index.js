@@ -9,6 +9,7 @@ require("./models/db");
 const APIRouter = require("./routes/APIRoutes");
 const UserRouter = require("./routes/UserRoutes")
 const LevelRouter = require("./routes/LevelRoutes")
+const TranslateRouter = require("./routes/TranslateRoutes");
 const app = express();
 const PORT = process.env.PORT || 8080;
 const {generateResponse} = require("./controllers/Gemini");
@@ -30,6 +31,7 @@ app.use("/api_r", APIRouter);
 app.post("/generate",generateResponse);
 app.use("/user",UserRouter);
 app.use("/level",LevelRouter);
+app.use("/translate",TranslateRouter)
 // mongoose.connect(process.env.MONGODB_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
