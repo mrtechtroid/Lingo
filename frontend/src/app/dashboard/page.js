@@ -288,7 +288,7 @@ function Component() {
             {units.map((unit, unitIndex) => (
               <div key={unit.id} className="mb-12">
                 <div className="bg-[#58CC02] text-white p-6 rounded-2xl mb-8">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center flex-wrap">
                     <div>
                       <h2 className="text-2xl font-bold mb-2">{unit.title}</h2>
                       <p className="text-lg">{unit.subtitle}</p>
@@ -413,10 +413,16 @@ function Component() {
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex">
       {/* Left Sidebar */}
-      <nav className="w-[240px] bg-white p-4 flex flex-col gap-2 border-r">
-        <Link href="/" className="text-[#58CC02] text-2xl font-bold mb-8">
-          Lingo
-        </Link>
+      <nav className="w-1/5 sm:w-[240px] bg-white p-4 flex flex-col gap-2 border-r">
+      <div className="hidden sm:flex items-center">
+  <Link href="/" className="text-[#58CC02] text-2xl font-bold mb-8">
+    Lingo
+  </Link>
+</div>
+<div className="sm:hidden">
+  <img src="/logo.png" alt="Logo" className="mb-8" />
+</div>
+
 
         {tabs.map((tab) => (
           <button
@@ -470,7 +476,8 @@ function Component() {
               />
             )}
 
-            <span className="font-bold text-lg">{tab.toUpperCase()}</span>
+        <span className="font-bold text-lg hidden sm:inline">{tab.toUpperCase()}</span>
+
           </button>
         ))}
         <button
@@ -483,7 +490,8 @@ function Component() {
             height={24}
             alt="logout"
           />
-          <span className="font-bold text-lg">LOGOUT</span>
+          <span className="font-bold text-lg hidden sm:inline">LOGOUT</span>
+
         </button>
       </nav>
 
@@ -491,7 +499,8 @@ function Component() {
       <main className="flex-1 p-6 overflow-y-scroll max-h-[100vh]">{renderTabContent()}</main>
 
       {/* Right Sidebar */}
-      <aside className="w-[320px] p-4 border-l bg-white">
+      <aside className="hidden md:block w-[320px] p-4 border-l bg-white">
+
         {/* Language Selector */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
