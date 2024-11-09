@@ -208,7 +208,7 @@ function Component() {
     console.log(token);
     async function getUser() {
       await axios
-        .get("http://localhost:8080/user/get", {
+        .get(process.env.NEXT_PUBLIC_SERVER_URL+"/user/get", {
           headers: { authorization: token },
         })
         .then((res) => {
@@ -227,7 +227,7 @@ function Component() {
   }, [token]);
   useEffect(()=>{
     async function getAllLevels(){
-      await axios.get('http://localhost:8080/level/getLevel',{ headers:{"authorization":token}}).then((res) => {
+      await axios.get(process.env.NEXT_PUBLIC_SERVER_URL+'/level/getLevel',{ headers:{"authorization":token}}).then((res) => {
         setAllLevels(res.data)
         console.log(res.data)
       }).catch((err)=>{
@@ -243,7 +243,7 @@ function Component() {
   useEffect(() => {
     async function getLeaderboard() {
       await axios
-        .get("http://localhost:8080/user/leaderboard", {
+        .get(process.env.NEXT_PUBLIC_SERVER_URL+"/user/leaderboard", {
           headers: { authorization: token },
         })
         .then((res) => {
@@ -263,7 +263,7 @@ function Component() {
     // alert("Exchange Hearts")
     await axios
       .post(
-        "http://localhost:8080/user/exchange",
+        process.env.NEXT_PUBLIC_SERVER_URL+"/user/exchange",
         {},
         { headers: { authorization: token } }
       )

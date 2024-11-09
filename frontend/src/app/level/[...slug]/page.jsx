@@ -51,7 +51,7 @@ export default function Level() {
   useEffect(() => {
     console.log(token)
     async function getUser(){
-      await axios.get('http://localhost:8080/user/get',{ headers:{"authorization":token}}).then((res) => {
+      await axios.get(process.env.NEXT_PUBLIC_SERVER_URL+'/user/get',{ headers:{"authorization":token}}).then((res) => {
         setUser(res.data)
         setHearts(res.data.hearts)
       }).catch((err)=>{
@@ -67,7 +67,7 @@ export default function Level() {
   useEffect(() => {
     console.log(token)
     async function getLevel(){
-      await axios.post('http://localhost:8080/level/getlevel',{"lessonID":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
+      await axios.post(process.env.NEXT_PUBLIC_SERVER_URL+'/level/getlevel',{"lessonID":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
         setQuestions(res.data)
       }).catch((err)=>{
         if (err.response.status == 411){
@@ -107,7 +107,7 @@ export default function Level() {
 
     setIsCorrect(correct)
     async function updateeExp(){
-      await axios.post('http://localhost:8080/user/updatexp',{"experience":10},{headers:{"authorization":token}}).then((res) => {
+      await axios.post(process.env.NEXT_PUBLIC_SERVER_URL+'/user/updatexp',{"experience":10},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
         setXpGained(prev=>prev+10)
         // toast.success("+10 Crowns")
@@ -118,7 +118,7 @@ export default function Level() {
       })
     }
     async function updateHeart(){
-      await axios.post('http://localhost:8080/user/updateheart',{"hearts":1},{headers:{"authorization":token}}).then((res) => {
+      await axios.post(process.env.NEXT_PUBLIC_SERVER_URL+'/user/updateheart',{"hearts":1},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
         setMistakes(prev=>prev+1)
         // toast.error("-1 Heart")
@@ -154,7 +154,7 @@ export default function Level() {
     }
   },[hearts])
   const completeLesson = async () =>{
-    await axios.post('http://localhost:8080/user/updatelevel',{"lesson":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
+    await axios.post(process.env.NEXT_PUBLIC_SERVER_URL+'/user/updatelevel',{"lesson":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
       console.log(res.data)
       setCurrentQuestionIndex(-1)
     }).catch((err)=>{

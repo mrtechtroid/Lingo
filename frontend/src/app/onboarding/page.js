@@ -117,7 +117,7 @@ export default function OnboardingPage() {
     console.log("hi")
     // e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/user/setonboarding', {
+      await axios.post(process.env.NEXT_PUBLIC_SERVER_URL+'/user/setonboarding', {
         "language":selectedLanguage,
         "level": proficiency,
         "referral":referral
