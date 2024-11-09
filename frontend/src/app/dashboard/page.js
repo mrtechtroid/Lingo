@@ -7,142 +7,142 @@ import { useRouter } from "next/navigation";
 import { Star, Book, Lock, Zap, LogOut } from "lucide-react";
 import Image from "next/image";
 const tabs = ["Learn", "Rankings", "Shop", "Profile"];
-const units = [
-  {
-    id: 1,
-    title: "Unit 1",
-    subtitle: "Form basic sentences, greet people",
-    lessons: [
-      {
-        id: 1,
-        title: "Basics 1",
-        icon: <Star className="w-6 h-6" />,
-        status: "completed",
-      },
-      {
-        id: 2,
-        title: "Greetings",
-        icon: <Book className="w-6 h-6" />,
-        status: "unlocked",
-      },
-      {
-        id: 3,
-        title: "People",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 4,
-        title: "Travel",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 5,
-        title: "Restaurant",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 6,
-        title: "Family",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 7,
-        title: "Shopping",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 8,
-        title: "Work",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 9,
-        title: "Weather",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 10,
-        title: "Hobbies",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Unit 2",
-    subtitle: "Expand vocabulary and grammar",
-    lessons: [
-      {
-        id: 11,
-        title: "Basics 2",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 12,
-        title: "Food",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 13,
-        title: "Animals",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 14,
-        title: "Clothing",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 15,
-        title: "Colors",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 16,
-        title: "Dates & Time",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 17,
-        title: "Feelings",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 18,
-        title: "Education",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 19,
-        title: "Technology",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-      {
-        id: 20,
-        title: "Sports",
-        icon: <Lock className="w-6 h-6" />,
-        status: "locked",
-      },
-    ],
-  },
-];
+// const units = [
+//   {
+//     id: 1,
+//     title: "Unit 1",
+//     subtitle: "Form basic sentences, greet people",
+//     lessons: [
+//       {
+//         id: 1,
+//         title: "Basics 1",
+//         icon: <Star className="w-6 h-6" />,
+//         status: "completed",
+//       },
+//       {
+//         id: 2,
+//         title: "Greetings",
+//         icon: <Book className="w-6 h-6" />,
+//         status: "unlocked",
+//       },
+//       {
+//         id: 3,
+//         title: "People",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 4,
+//         title: "Travel",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 5,
+//         title: "Restaurant",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 6,
+//         title: "Family",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 7,
+//         title: "Shopping",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 8,
+//         title: "Work",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 9,
+//         title: "Weather",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 10,
+//         title: "Hobbies",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     title: "Unit 2",
+//     subtitle: "Expand vocabulary and grammar",
+//     lessons: [
+//       {
+//         id: 11,
+//         title: "Basics 2",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 12,
+//         title: "Food",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 13,
+//         title: "Animals",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 14,
+//         title: "Clothing",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 15,
+//         title: "Colors",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 16,
+//         title: "Dates & Time",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 17,
+//         title: "Feelings",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 18,
+//         title: "Education",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 19,
+//         title: "Technology",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//       {
+//         id: 20,
+//         title: "Sports",
+//         icon: <Lock className="w-6 h-6" />,
+//         status: "locked",
+//       },
+//     ],
+//   },
+// ];
 
 function Component() {
   const [activeTab, setActiveTab] = useState("Learn");
@@ -151,10 +151,56 @@ function Component() {
   const router = useRouter();
   const [token, setToken] = useState("");
   const [leaderboardData, setLeaderboardData] = useState([]);
+  const [allLevels, setAllLevels] = useState([]);
+  const [units, setUnits] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
   }, []);
+  function convertUnits(inputUnits, userProgress) {
+    console.log(inputUnits,userProgress)
+    const { lessonId, level } = userProgress;
+  
+    return inputUnits.map((unit, index) => {
+      const isCurrentUnit = unit._id === lessonId;
+      const unitCompleted = unit.difficulty < inputUnits.find(u => u._id === lessonId).difficulty;
+  
+      const lessons = Array.from({ length: unit.levels }, (_, i) => {
+        let status;
+        if (unitCompleted || (isCurrentUnit && i < level)) {
+          status = 'completed';
+        } else if (isCurrentUnit && i === level) {
+          status = 'unlocked';
+        } else {
+          status = 'locked';
+        }
+  
+        return {
+          id: i + 1,
+          url: `/level/${unit._id}/${i}`,
+          icon: status === 'completed' ? <Star className="w-6 h-6" /> :
+                status === 'unlocked' ? <Book className="w-6 h-6" /> :
+                <Lock className="w-6 h-6" />,
+          status: status
+        };
+      });
+  
+      return {
+        id: index + 1,
+        title: `Unit ${index + 1}`,
+        subtitle: unit.synopsis,
+        lessons: lessons
+      };
+    });
+  }
+  useEffect(()=>{
+    if (allLevels.length === 0){
+      return
+    }
+    setUnits(convertUnits(allLevels,{lessonId:user.lesson,level:user.level}))
+    console.log(allLevels)
+    
+  },[allLevels,user])
   useEffect(() => {
     console.log(token);
     async function getUser() {
@@ -176,6 +222,21 @@ function Component() {
     }
     getUser();
   }, [token]);
+  useEffect(()=>{
+    async function getAllLevels(){
+      await axios.get('http://localhost:8080/level/getLevel',{ headers:{"authorization":token}}).then((res) => {
+        setAllLevels(res.data)
+        console.log(res.data)
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
+    getAllLevels()
+    
+  },[token])
+
   useEffect(() => {
     async function getLeaderboard() {
       await axios
@@ -240,6 +301,7 @@ function Component() {
                     {unit.lessons.map((lesson, index) => (
                       <div
                         key={lesson.id}
+                        onClick={()=>{if (lesson.status!="locked"){router.push(lesson.url)}}}
                         className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
                           index % 2 === 0 ? "-translate-x-8" : "translate-x-8"
                         } ${
@@ -410,7 +472,7 @@ function Component() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 overflow-y-auto">{renderTabContent()}</main>
+      <main className="flex-1 p-6 overflow-y-scroll max-h-[100vh]">{renderTabContent()}</main>
 
       {/* Right Sidebar */}
       <aside className="w-[320px] p-4 border-l bg-white">

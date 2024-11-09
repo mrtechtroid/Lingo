@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const LessonSchema = new mongoose.Schema({
-    scenario:{
+    synopsis:{
         type: String,
         required: true,
     },
@@ -10,6 +10,10 @@ const LessonSchema = new mongoose.Schema({
         required: true,
     },
     levels:{
+        type: Number,
+        required: true,
+    },
+    difficulty:{
         type: Number,
         required: true,
     }

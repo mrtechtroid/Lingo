@@ -1,13 +1,15 @@
-const Lesson = require("../models/Lesson");
+const Lesson = require("../models/Lessons");
 
 const getLessonDetails = async (req, res) => {
   try {
-    const lessons = await Lesson.find({}, "scenario levels").lean();
+    const lessons = await Lesson.find({}, "synopsis levels difficulty").sort({ difficulty: 1 }).lean();
     
     // Format each lesson as JSON with only scenario and levels fields
     const response = lessons.map((lesson) => ({
-      scenario: lesson.scenario,
+      _id: lesson._id,
+      synopsis: lesson.synopsis,
       levels: lesson.levels,
+      difficulty: lesson.difficulty,
     }));
 
     res.status(200).json(response);
