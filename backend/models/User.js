@@ -47,8 +47,8 @@ const UserSchema = new mongoose.Schema({
   level:{
     type: Number,
     // required: true,
-    default: 1,
-    min: 1,
+    default: -1,
+    min: -1,
   }
 });
 

@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { Volume2, X, Heart } from 'lucide-react'
 import { useRouter,useParams } from 'next/navigation'
+import Image from 'next/image'
 import axios from 'axios'
-import {ToastContainer, toast} from 'react-toastify';
+// import {ToastContainer, toast} from 'react-toastify';
 export default function Level() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -37,11 +38,19 @@ export default function Level() {
     const token = localStorage.getItem('token')
     setToken(token)
   }, [])
+  useEffect(()=>{
+    if (hearts<=0){
+      alert("You have no hearts left. To continue further. ")
+      // setshowError(true)
+      router.push("/dashboard")
+    }
+  },[hearts])
   useEffect(() => {
     console.log(token)
     async function getUser(){
       await axios.get('http://localhost:8080/user/get',{ headers:{"authorization":token}}).then((res) => {
         setUser(res.data)
+        setHearts(res.data.hearts)
       }).catch((err)=>{
         if (err.response.status == 411){
           router.push("/login")
@@ -49,7 +58,7 @@ export default function Level() {
       })
     }
     getUser()
-    setHearts(user.hearts)
+    
     // setXp(user.experience)
   }, [token])
   useEffect(() => {
@@ -95,9 +104,9 @@ export default function Level() {
 
     setIsCorrect(correct)
     async function updateeExp(){
-      await axios.post('http://localhost:8080/user/updatexp',{"experience":10}).then((res) => {
+      await axios.post('http://localhost:8080/user/updatexp',{"experience":10},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
-        toast.success("+10 Crowns")
+        // toast.success("+10 Crowns")
       }).catch((err)=>{
         if (err.response.status == 411){
           router.push("/login")
@@ -105,9 +114,9 @@ export default function Level() {
       })
     }
     async function updateHeart(){
-      await axios.post('http://localhost:8080/user/updateheart',{"hearts":1}).then((res) => {
+      await axios.post('http://localhost:8080/user/updateheart',{"hearts":1},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
-        toast.error("-1 Heart")
+        // toast.error("-1 Heart")
       }).catch((err)=>{
         if (err.response.status == 411){
           router.push("/login")
@@ -125,10 +134,11 @@ export default function Level() {
 
     } else {
       playSound('error')
-      setHearts(prev => prev - 1)
-      updateHeart(prev)
-      setShowError(true)
-      setTimeout(() => setShowError(false), 2000)
+      updateHeart(hearts-1).then(()=>{
+        setHearts(hearts-1)
+        setShowError(true)
+        setTimeout(() => setShowError(false), 2000)
+      })
     }
   }
   useEffect(()=>{
@@ -335,15 +345,16 @@ export default function Level() {
 
   return (
     <div className="min-h-screen bg-white">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b">
-        <button className="p-2 hover:bg-gray-100 rounded-full">
-          <X className="w-6 h-6" />
+        <button className="p-2 hover:bg-gray-100 rounded-full" onClick={()=>router.push("/dashboard")}>
+          <Image src = "/icons/red/Arrow Left_Red.png" width={24} height = {24} alt = "X"/>
+          {/* <X className="w-6 h-6" /> */}
         </button>
         <div className="flex items-center gap-2">
           {hearts>=0 && [...Array(hearts)].map((_, i) => (
-            <Heart key={i} className="w-6 h-6 text-red-500 fill-current" />
+            <i key={i} className="w-6 h-6 text-red-500 fill-current nes-icon heart" />
           ))}
         </div>
         <div className="w-6" /> {/* Spacer */}
