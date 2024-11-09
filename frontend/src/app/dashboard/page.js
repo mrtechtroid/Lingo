@@ -532,11 +532,11 @@ function Component() {
             <div className="flex-1 h-3 bg-gray-100 rounded-full">
               <div
                 className="h-full bg-green-400 rounded-full"
-                style={{ width: `${(user.experience / dailyGoal) * 100}%` }}
+                style={{ width: `${Math.min((user.experience / dailyGoal) * 100, 100)}%` }}
               />
             </div>
             <span className="text-sm text-gray-500">
-              {user.experience}/{dailyGoal}
+              {Math.min(user.experience,dailyGoal)}/{dailyGoal}
             </span>
           </div>
         </div>
@@ -553,13 +553,13 @@ function Component() {
               <div className="flex justify-between mb-1">
                 <span>Daily goal</span>
                 <span>
-                  {user.experience}/{dailyGoal} XP
+                  {Math.min(user.experience,dailyGoal)}/{dailyGoal} XP
                 </span>
               </div>
               <div className="h-3 bg-gray-100 rounded-full">
                 <div
                   className="h-full bg-green-400 rounded-full"
-                  style={{ width: `${(user.experience / dailyGoal) * 100}%` }}
+                  style={{ width: `${Math.min((user.experience / dailyGoal) * 100, 100)}%` }}
                 />
               </div>
             </div>
