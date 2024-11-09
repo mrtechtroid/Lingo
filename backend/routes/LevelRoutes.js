@@ -3,6 +3,6 @@ const User = require("../models/User");
 const getLevel = require("../controllers/getLevel");
 const ensureAuthenticated = require("../middlewares/Auth");
 
-router.get("/getLevel",ensureAuthenticated, getLevel);
+router.post("/getLevel",ensureAuthenticated, getLevel);
 
 module.exports = router;

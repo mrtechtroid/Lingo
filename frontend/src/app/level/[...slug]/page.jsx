@@ -2,442 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Volume2, X, Heart } from 'lucide-react'
-
-// Sample questions data
-// const questions_ = [
-//   {
-//     id: 1,
-//     type: 'NEW_WORD',
-//     question: "Which one of these is 'the cat'?",
-//     options: [
-//       { id: 1, text: "l'homme", image: "https://image.pollinations.ai/prompt/dog" },
-//       { id: 2, text: "le chat", image: "https://image.pollinations.ai/prompt/cat" }
-//     ],
-//     correctAnswer: 2,
-//     newWord: true
-//   },
-//   {
-//     id: 2,
-//     type: 'NEW_WORD',
-//     question: "Which one means 'the dog'?",
-//     options: [
-//       { id: 1, text: "le chien", image: "/placeholder.svg?height=150&width=150" },
-//       { id: 2, text: "l'oiseau", image: "/placeholder.svg?height=150&width=150" }
-//     ],
-//     correctAnswer: 1,
-//     newWord: true
-//   },
-//   {
-//     id: 3,
-//     type: 'TRANSLATION',
-//     question: "How do you say 'cat'?",
-//     inputFields: ['', ''],
-//     correctAnswer: ['chat', 'le'],
-//     hint: "Don't forget the article!"
-//   },
-//   {
-//     id: 4,
-//     type: 'TRANSLATION',
-//     question: "How do you say 'dog'?",
-//     inputFields: ['', ''],
-//     correctAnswer: ['chien', 'le'],
-//     hint: "Don't forget the article!"
-//   },
-//   {
-//     id: 5,
-//     type: 'WORD_BANK',
-//     question: "Write this in English",
-//     phrase: "Tu es un chat ?",
-//     wordBank: ['Are', 'you', 'a', 'cat', 'horse', 'girl', "It's", 'woman'],
-//     correctAnswer: ['Are', 'you', 'a', 'cat'],
-//     audio: true
-//   },
-//   {
-//     id: 6,
-//     type: 'WORD_BANK',
-//     question: "Write this in English",
-//     phrase: "Je suis un homme",
-//     wordBank: ['I', 'am', 'a', 'man', 'woman', 'they', 'we', 'are'],
-//     correctAnswer: ['I', 'am', 'a', 'man'],
-//     audio: true
-//   },
-//   {
-//     id: 7,
-//     type: 'FILL_BLANK',
-//     question: "Fill in the blank",
-//     sentence: "__ et un chat",
-//     options: ['un', 'garçon', 'homme', 'et'],
-//     correctAnswer: 'un'
-//   },
-//   {
-//     id: 8,
-//     type: 'FILL_BLANK',
-//     question: "Fill in the blank",
-//     sentence: "Je suis __",
-//     options: ['un', 'une', 'le', 'la'],
-//     correctAnswer: 'un'
-//   },
-//   {
-//     id: 9,
-//     type: 'MATCHING',
-//     question: "Tap the matching pairs",
-//     pairs: [
-//       { word: 'chat', translation: 'cat' },
-//       { word: 'homme', translation: 'man' },
-//       { word: 'garçon', translation: 'boy' },
-//       { word: 'et', translation: 'and' }
-//     ]
-//   },
-//   {
-//     id: 10,
-//     type: 'MATCHING',
-//     question: "Tap the matching pairs",
-//     pairs: [
-//       { word: 'chien', translation: 'dog' },
-//       { word: 'oiseau', translation: 'bird' },
-//       { word: 'chat', translation: 'cat' },
-//       { word: 'poisson', translation: 'fish' }
-//     ]
-//   }
-// ]
-const questions = 
-[
-  {
-    "id": 1,
-    "type": "NEW_WORD",
-    "question": "Which one of these is 'नमस्ते'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "नमस्ते",
-        "image": "https://image.pollinations.ai/prompt/hello"
-      },
-      {
-        "id": 2,
-        "text": "अच्छा",
-        "image": "https://image.pollinations.ai/prompt/good"
-      },
-      {
-        "id": 3,
-        "text": "कैसे",
-        "image": "https://image.pollinations.ai/prompt/how"
-      },
-      {
-        "id": 4,
-        "text": "आपका स्वागत है",
-        "image": "https://image.pollinations.ai/prompt/welcome"
-      }
-    ],
-    "correctAnswer": 1,
-    "newWord": true
-  },
-  {
-    "id": 2,
-    "type": "TRANSLATION",
-    "question": "How do you say 'hello' in Hindi?",
-    "inputFields": [
-      ""
-    ],
-    "correctAnswer": [
-      "नमस्ते"
-    ],
-    "hint": "Translate it to Hindi"
-  },
-  {
-    "id": 3,
-    "type": "WORD_BANK",
-    "question": "Translate this to Hindi",
-    "phrase": "Hello, how are you?",
-    "wordBank": [
-      "आप",
-      "हैं?",
-      "नमस्ते,",
-      "कैसे"
-    ],
-    "correctAnswer": [
-      "नमस्ते,",
-      "आप",
-      "कैसे",
-      "हैं?"
-    ],
-    "audio": true
-  },
-  {
-    "id": 4,
-    "type": "WORD_BANK",
-    "question": "Translate this to Hindi",
-    "phrase": "Hello, my name is John.",
-    "wordBank": [
-      "शुभेच्छाएँ",
-      "नमस्ते",
-      "जॉन",
-      "अच्छा",
-      "नाम",
-      "आपका स्वागत है",
-      "मेरा",
-      "है।",
-      "नमस्ते,"
-    ],
-    "correctAnswer": [
-      "नमस्ते,",
-      "मेरा",
-      "नाम",
-      "जॉन",
-      "है।"
-    ],
-    "audio": true
-  },
-  {
-    "id": 5,
-    "type": "WORD_BANK",
-    "question": "Translate this to Hindi",
-    "phrase": "Hello everyone!",
-    "wordBank": [
-      "शुभेच्छाएँ",
-      "नमस्ते!",
-      "को",
-      "सभी"
-    ],
-    "correctAnswer": [
-      "सभी",
-      "को",
-      "नमस्ते!"
-    ],
-    "audio": true
-  },
-  {
-    "id": 6,
-    "type": "WORD_BANK",
-    "question": "Translate this to Hindi",
-    "phrase": "Hello! Can I help you?",
-    "wordBank": [
-      "हूँ?",
-      "नमस्ते!",
-      "आपकी",
-      "क्या",
-      "मैं",
-      "शुभेच्छाएँ",
-      "सकता",
-      "कर",
-      "मदद"
-    ],
-    "correctAnswer": [
-      "नमस्ते!",
-      "क्या",
-      "मैं",
-      "आपकी",
-      "मदद",
-      "कर",
-      "सकता",
-      "हूँ?"
-    ],
-    "audio": true
-  },
-  {
-    "id": 7,
-    "type": "FILL_BLANK",
-    "question": "Fill in the blank",
-    "sentence": "Hello, how are you?",
-    "options": [
-      "नमस्ते",
-      "नमस्ते",
-      "शुभेच्छाएँ",
-      "अच्छा"
-    ],
-    "correctAnswer": "नमस्ते"
-  },
-  {
-    "id": 8,
-    "type": "FILL_BLANK",
-    "question": "Fill in the blank",
-    "sentence": "Hello, my name is John.",
-    "options": [
-      "नमस्ते",
-      "नमस्ते",
-      "शुभेच्छाएँ",
-      "आपका स्वागत है"
-    ],
-    "correctAnswer": "नमस्ते"
-  },
-  {
-    "id": 9,
-    "type": "FILL_BLANK",
-    "question": "Fill in the blank",
-    "sentence": "Hello everyone!",
-    "options": [
-      "नमस्ते",
-      "कैसे",
-      "आपका स्वागत है",
-      "अच्छा"
-    ],
-    "correctAnswer": "नमस्ते"
-  },
-  {
-    "id": 10,
-    "type": "FILL_BLANK",
-    "question": "Fill in the blank",
-    "sentence": "Hello! Can I help you?",
-    "options": [
-      "आपका स्वागत है",
-      "शुभेच्छाएँ",
-      "नमस्ते",
-      "नमस्ते"
-    ],
-    "correctAnswer": "नमस्ते"
-  },
-  {
-    "id": 11,
-    "type": "MATCHING",
-    "question": "Match the words with their translations",
-    "pairs": [
-      {
-        "word": "hello",
-        "translation": "नमस्ते"
-      },
-      {
-        "word": "greetings",
-        "translation": "शुभेच्छाएँ"
-      },
-      {
-        "word": "welcome",
-        "translation": "आपका स्वागत है"
-      },
-      {
-        "word": "good",
-        "translation": "अच्छा"
-      },
-      {
-        "word": "how",
-        "translation": "कैसे"
-      }
-    ]
-  },
-  {
-    "id": 12,
-    "type": "NEW_WORD",
-    "question": "Which one means 'hello'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "नमस्ते"
-      },
-      {
-        "id": 2,
-        "text": "आपका स्वागत है"
-      },
-      {
-        "id": 3,
-        "text": "अच्छा"
-      },
-      {
-        "id": 4,
-        "text": "कैसे"
-      }
-    ],
-    "correctAnswer": "नमस्ते",
-    "newWord": true
-  },
-  {
-    "id": 13,
-    "type": "NEW_WORD",
-    "question": "Which one means 'greetings'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "आपका स्वागत है"
-      },
-      {
-        "id": 2,
-        "text": "नमस्ते"
-      },
-      {
-        "id": 3,
-        "text": "कैसे"
-      },
-      {
-        "id": 4,
-        "text": "शुभेच्छाएँ"
-      }
-    ],
-    "correctAnswer": "शुभेच्छाएँ",
-    "newWord": true
-  },
-  {
-    "id": 14,
-    "type": "NEW_WORD",
-    "question": "Which one means 'welcome'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "आपका स्वागत है"
-      },
-      {
-        "id": 2,
-        "text": "अच्छा"
-      },
-      {
-        "id": 3,
-        "text": "शुभेच्छाएँ"
-      },
-      {
-        "id": 4,
-        "text": "नमस्ते"
-      }
-    ],
-    "correctAnswer": "आपका स्वागत है",
-    "newWord": true
-  },
-  {
-    "id": 15,
-    "type": "NEW_WORD",
-    "question": "Which one means 'good'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "शुभेच्छाएँ"
-      },
-      {
-        "id": 2,
-        "text": "नमस्ते"
-      },
-      {
-        "id": 3,
-        "text": "आपका स्वागत है"
-      },
-      {
-        "id": 4,
-        "text": "अच्छा"
-      }
-    ],
-    "correctAnswer": "अच्छा",
-    "newWord": true
-  },
-  {
-    "id": 16,
-    "type": "NEW_WORD",
-    "question": "Which one means 'how'?",
-    "options": [
-      {
-        "id": 1,
-        "text": "आपका स्वागत है"
-      },
-      {
-        "id": 2,
-        "text": "नमस्ते"
-      },
-      {
-        "id": 3,
-        "text": "शुभेच्छाएँ"
-      },
-      {
-        "id": 4,
-        "text": "कैसे"
-      }
-    ],
-    "correctAnswer": "कैसे",
-    "newWord": true
-  }
-]
+import { useRouter,useParams } from 'next/navigation'
+import axios from 'axios'
+import {ToastContainer, toast} from 'react-toastify';
 export default function Level() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -448,9 +15,13 @@ export default function Level() {
   const [hearts, setHearts] = useState(5)
   const [showError, setShowError] = useState(false)
   const [selectedMatchingWord, setSelectedMatchingWord] = useState(null)
-
-  const currentQuestion = questions[currentQuestionIndex]
-
+  const [questions, setQuestions] = useState('')
+  // const currentQuestion = questions[currentQuestionIndex]
+  const router = useRouter();
+  const path = useParams().slug;
+  const lessonID = path[0];
+  const level = path[1];
+  // alert(lessonID,level)
   useEffect(() => {
     // Reset states when question changes
     setSelectedAnswer(null)
@@ -460,7 +31,24 @@ export default function Level() {
     setIsCorrect(null)
     setShowError(false)
   }, [currentQuestionIndex])
-
+  const [token, setToken] = useState('')
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setToken(token)
+  }, [])
+  useEffect(() => {
+    console.log(token)
+    async function getUser(){
+      await axios.post('http://localhost:8080/level/getlevel',{"lessonID":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
+        setQuestions(res.data)
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
+    getUser()
+  }, [path,token])
   const playSound = () => {
     // const audio = new Audio(type === 'success' ? '/success.mp3' : '/error.mp3')
     // audio.play()
@@ -468,7 +56,7 @@ export default function Level() {
 
   const handleCheck = () => {
     let correct = false
-
+    const currentQuestion = questions[currentQuestionIndex]
     switch (currentQuestion.type) {
       case 'NEW_WORD':
         correct = selectedAnswer === currentQuestion.correctAnswer
@@ -490,14 +78,25 @@ export default function Level() {
     }
 
     setIsCorrect(correct)
-    
+    async function updateeExp(){
+      await axios.post('http://localhost:8080/user/updateexp',{"experience":10}).then((res) => {
+        console.log(res.data)
+        toast("+10 Crowns")
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
     if (correct) {
       playSound('success')
+      updateeExp(10)
       setTimeout(() => {
         if (currentQuestionIndex < questions.length - 1) {
           setCurrentQuestionIndex(prev => prev + 1)
         }
-      }, 1500)
+      }, 900)
+
     } else {
       playSound('error')
       setHearts(prev => prev - 1)
@@ -517,7 +116,8 @@ export default function Level() {
   }
 
   const renderQuestion = () => {
-    switch (currentQuestion.type) {
+    const currentQuestion = questions[currentQuestionIndex]
+    switch (currentQuestion &&currentQuestion.type) {
       case 'NEW_WORD':
         return (
           <div className="space-y-4">

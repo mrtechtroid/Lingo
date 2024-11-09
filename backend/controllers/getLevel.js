@@ -203,7 +203,10 @@ const getLevel = async (req, res) => {
       console.log(responses);
       questions = [];
       responses.forEach((response) => {
-        questions.push(generateQuestions(response));
+        let t = generateQuestions(response);
+        t.forEach((q)=>{
+          questions.push(q)
+        })
       });
       res.json(questions);
     });
@@ -369,7 +372,14 @@ function generateQuestions(data) {
   });
 
   // WORD_BANK questions: Add random words for complexity
+  let flag = false
   exampleSentences.forEach((example) => {
+    if (flag == true){
+      return
+    }
+    if (Math.random()>0.6){
+      return
+    }
     questions.push({
       id: idCounter++,
       type: 'WORD_BANK',
@@ -379,10 +389,26 @@ function generateQuestions(data) {
       correctAnswer: example.translation.split(' '),
       audio: true,
     });
+    flag = true
   });
-
+  if (flag==false){questions.push({
+    id: idCounter++,
+    type: 'WORD_BANK',
+    question: `Translate this to Hindi`,
+    phrase: exampleSentences[0].sentence,
+    wordBank: addRandomWords(exampleSentences[0].translation.split(' ')),
+    correctAnswer: exampleSentences[0].translation.split(' '),
+    audio: true,
+  });}
+  flag = false
   // FILL_BLANK questions: Generated from example sentences with blanks and random options
   exampleSentences.forEach((example) => {
+    if (flag == true){
+      return
+    }
+    if (Math.random()>0.6){
+      return
+    }
     questions.push({
       id: idCounter++,
       type: 'FILL_BLANK',
@@ -392,6 +418,15 @@ function generateQuestions(data) {
       correctAnswer: translation,
     });
   });
+  if (flag==false){questions.push({
+    id: idCounter++,
+    type: 'FILL_BLANK',
+    question: "Fill in the blank",
+    sentence: exampleSentences[0].sentence.replace(word, "__"),
+    options: addRandomWords([translation]),
+    correctAnswer: translation,
+  });}
+  flag = false
 
   // MATCHING questions: Pair related words with their translations
   if (relatedWords.length > 0) {
@@ -403,17 +438,17 @@ function generateQuestions(data) {
     });
   }
 
-  // Additional NEW_WORD questions for each related word
-  relatedWords.forEach((rw) => {
-    questions.push({
-      id: idCounter++,
-      type: 'NEW_WORD',
-      question: `Which one means '${rw.word}'?`,
-      options: getRandomOptions(rw.translation).map((text, index) => ({ id: index + 1, text })),
-      correctAnswer: rw.translation,
-      newWord: true,
-    });
-  });
+  // // Additional NEW_WORD questions for each related word
+  // relatedWords.forEach((rw) => {
+  //   questions.push({
+  //     id: idCounter++,
+  //     type: 'NEW_WORD',
+  //     question: `Which one means '${rw.word}'?`,
+  //     options: getRandomOptions(rw.translation).map((text, index) => ({ id: index + 1, text })),
+  //     correctAnswer: rw.translation,
+  //     newWord: true,
+  //   });
+  // });
 
   return questions;
 }
