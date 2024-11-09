@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="icon"  href="/logo.png"/>
+      <title>Lingo</title>
 
       <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet"></link>
 </head>

@@ -413,7 +413,7 @@ function generateQuestions(data) {
       id: idCounter++,
       type: 'FILL_BLANK',
       question: "Fill in the blank",
-      sentence: example.sentence.replace(word, "__"),
+      sentence: example.sentence.toLowerCase().replace(word, "__"),
       options: addRandomWords([translation]),
       correctAnswer: translation,
     });
@@ -422,7 +422,7 @@ function generateQuestions(data) {
     id: idCounter++,
     type: 'FILL_BLANK',
     question: "Fill in the blank",
-    sentence: exampleSentences[0].sentence.replace(word, "__"),
+    sentence: exampleSentences[0].sentence.toLowerCase().replace(word, "__"),
     options: addRandomWords([translation]),
     correctAnswer: translation,
   });}

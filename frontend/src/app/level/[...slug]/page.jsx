@@ -16,6 +16,7 @@ export default function Level() {
   const [showError, setShowError] = useState(false)
   const [selectedMatchingWord, setSelectedMatchingWord] = useState(null)
   const [questions, setQuestions] = useState('')
+  const [user, setUser] = useState({})
   // const currentQuestion = questions[currentQuestionIndex]
   const router = useRouter();
   const path = useParams().slug;
@@ -39,6 +40,21 @@ export default function Level() {
   useEffect(() => {
     console.log(token)
     async function getUser(){
+      await axios.get('http://localhost:8080/user/get',{ headers:{"authorization":token}}).then((res) => {
+        setUser(res.data)
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
+    getUser()
+    setHearts(user.hearts)
+    // setXp(user.experience)
+  }, [token])
+  useEffect(() => {
+    console.log(token)
+    async function getLevel(){
       await axios.post('http://localhost:8080/level/getlevel',{"lessonID":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
         setQuestions(res.data)
       }).catch((err)=>{
@@ -47,7 +63,7 @@ export default function Level() {
         }
       })
     }
-    getUser()
+    getLevel()
   }, [path,token])
   const playSound = () => {
     // const audio = new Audio(type === 'success' ? '/success.mp3' : '/error.mp3')
@@ -79,9 +95,19 @@ export default function Level() {
 
     setIsCorrect(correct)
     async function updateeExp(){
-      await axios.post('http://localhost:8080/user/updateexp',{"experience":10}).then((res) => {
+      await axios.post('http://localhost:8080/user/updatexp',{"experience":10}).then((res) => {
         console.log(res.data)
-        toast("+10 Crowns")
+        toast.success("+10 Crowns")
+      }).catch((err)=>{
+        if (err.response.status == 411){
+          router.push("/login")
+        }
+      })
+    }
+    async function updateHeart(){
+      await axios.post('http://localhost:8080/user/updateheart',{"hearts":1}).then((res) => {
+        console.log(res.data)
+        toast.error("-1 Heart")
       }).catch((err)=>{
         if (err.response.status == 411){
           router.push("/login")
@@ -100,6 +126,7 @@ export default function Level() {
     } else {
       playSound('error')
       setHearts(prev => prev - 1)
+      updateHeart(prev)
       setShowError(true)
       setTimeout(() => setShowError(false), 2000)
     }
@@ -308,6 +335,7 @@ export default function Level() {
 
   return (
     <div className="min-h-screen bg-white">
+      <ToastContainer />
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b">
         <button className="p-2 hover:bg-gray-100 rounded-full">
