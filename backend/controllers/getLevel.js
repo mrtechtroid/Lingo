@@ -429,14 +429,14 @@ function generateQuestions(data) {
   flag = false
 
   // MATCHING questions: Pair related words with their translations
-  if (relatedWords.length > 0) {
-    questions.push({
-      id: idCounter++,
-      type: 'MATCHING',
-      question: "Match the words with their translations",
-      pairs: relatedWords.map(rw => ({ word: rw.word, translation: rw.translation })),
-    });
-  }
+  // if (relatedWords.length > 0) {
+  //   questions.push({
+  //     id: idCounter++,
+  //     type: 'MATCHING',
+  //     question: "Match the words with their translations",
+  //     pairs: relatedWords.map(rw => ({ word: rw.word, translation: rw.translation })),
+  //   });
+  // }
 
   // // Additional NEW_WORD questions for each related word
   // relatedWords.forEach((rw) => {

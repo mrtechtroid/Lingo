@@ -17,6 +17,9 @@ export default function Level() {
   const [showError, setShowError] = useState(false)
   const [selectedMatchingWord, setSelectedMatchingWord] = useState(null)
   const [questions, setQuestions] = useState('')
+  const [mistakes, setMistakes] = useState(0)
+  const [xpGained, setXpGained] = useState(0)
+  const [skipped, setSkipped] = useState(0)
   const [user, setUser] = useState({})
   // const currentQuestion = questions[currentQuestionIndex]
   const router = useRouter();
@@ -106,6 +109,7 @@ export default function Level() {
     async function updateeExp(){
       await axios.post('http://localhost:8080/user/updatexp',{"experience":10},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
+        setXpGained(prev=>prev+10)
         // toast.success("+10 Crowns")
       }).catch((err)=>{
         if (err.response.status == 411){
@@ -116,6 +120,7 @@ export default function Level() {
     async function updateHeart(){
       await axios.post('http://localhost:8080/user/updateheart',{"hearts":1},{headers:{"authorization":token}}).then((res) => {
         console.log(res.data)
+        setMistakes(prev=>prev+1)
         // toast.error("-1 Heart")
       }).catch((err)=>{
         if (err.response.status == 411){
@@ -129,6 +134,8 @@ export default function Level() {
       setTimeout(() => {
         if (currentQuestionIndex < questions.length - 1) {
           setCurrentQuestionIndex(prev => prev + 1)
+        }else{
+          completeLesson()
         }
       }, 900)
 
@@ -146,13 +153,49 @@ export default function Level() {
       alert("You have no hearts left. To continue further. ")
     }
   },[hearts])
+  const completeLesson = async () =>{
+    await axios.post('http://localhost:8080/user/updatelevel',{"lesson":lessonID,"level":level},{headers:{"authorization":token}}).then((res) => {
+      console.log(res.data)
+      setCurrentQuestionIndex(-1)
+    }).catch((err)=>{
+      if (err.response.status == 411){
+        router.push("/login")
+      }
+    })
+  }
   const handleSkip = () => {
+    setSkipped(prev=>prev+1)
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1)
+    }else{
+      completeLesson()
+      // setCurrentQuestionIndex(-1)
     }
   }
 
   const renderQuestion = () => {
+    if(currentQuestionIndex === -1){
+      return <div className="space-y-4">
+        <div className="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 text-purple-600 text-sm font-medium">
+          FINISHED! 
+        </div>
+        <h2 className="text-xl font-bold">You have completed the lesson!</h2>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Arrow Left_Red.png" width={24} height={24} alt="heart"></Image>
+            <span>You have skipped {skipped} questions</span>
+          </div>
+          <div className="flex items-center gap-2">
+          <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Questionmark_Red.png" width={24} height={24} alt="heart"></Image>
+            <span>You have made {mistakes} mistakes</span>
+          </div>
+          <div className="flex items-center gap-2">
+          <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Crown_Red.png" width={24} height={24} alt="heart"></Image>
+            <span>You gained {xpGained} Crowns</span>
+          </div>
+        </div>
+      </div>
+    }
     const currentQuestion = questions[currentQuestionIndex]
     switch (currentQuestion &&currentQuestion.type) {
       case 'NEW_WORD':
@@ -388,6 +431,7 @@ export default function Level() {
         )}
 
         {/* Buttons */}
+        {currentQuestionIndex !== -1 &&
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
           <div className="max-w-2xl mx-auto flex gap-4">
             <button
@@ -405,6 +449,19 @@ export default function Level() {
             </button>
           </div>
         </div>
+}
+        {currentQuestionIndex === -1 &&
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
+          <div className="max-w-2xl mx-auto flex gap-4">
+            <button
+              onClick={function(){router.push("/dashboard")}}
+              className="px-6 py-3 text-[#58CC02] font-bold rounded-xl hover:bg-[#E5F7E5]"
+            >
+              FINISH
+            </button>
+          </div>
+        </div>
+}
       </main>
     </div>
   )

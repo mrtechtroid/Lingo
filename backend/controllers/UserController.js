@@ -35,6 +35,7 @@ const updateExperience = async (req, res) => {
 
   const updateLevel = async (req, res) => {
     const schema = joi.object({
+        lesson:joi.string().required(),
         level: joi.number().required(),
       });
       const { error } = schema.validate(req.body);
@@ -43,13 +44,15 @@ const updateExperience = async (req, res) => {
       }
     try {
       const level=req.body.level;
+      const lesson=req.body.lesson;
       const userId = req.user._id;
       // const { userId, level } = req.body;
       const updatedUser = await User.findByIdAndUpdate(userId, 
-      { $set: { level } },
+      { $set: { level , lesson } },
       { new: true });
       res.status(200).json({ message: "Level Updated", success: true, user: updatedUser });
     } catch (error) {
+      console.log(error)
       res.status(500).json({ message: "Internal Server Error", success: false });
     }
   };

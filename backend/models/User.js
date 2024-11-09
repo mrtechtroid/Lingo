@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema({
   },
   lesson:{
     type: String,
+    default:"672ef2b989d86b414ae197cb"
     //required: true,
   },
   level:{
