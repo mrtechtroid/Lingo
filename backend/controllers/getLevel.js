@@ -3,6 +3,7 @@ const Lesson = require("../models/Lessons");
 const joi = require("joi")
 const { GoogleGenerativeAI, SchemaType } = require('@google/generative-ai');
 const dotenv = require('dotenv');
+const User = require("../models/User");
 dotenv.config();
 
 // GoogleGenerativeAI required config
@@ -73,65 +74,66 @@ const modelId = "gemini-1.5-flash-8b";
 //     responseSchema: newWordSchema,
 //   },
 // });
-const newWordSchema3 = {
-  type: "object",
-  properties: {
-    word: { 
-      type: "string", 
-      description: "The word provided as input" 
-    },
-    translation: { 
-      type: "string", 
-      description: "The translation of the input word in Hindi" 
-    },
-    relatedWords: {
-      type: "array",
-      description: "A list of words related to the input word and their translations in Hindi",
-      items: {
-        type: "object",
-        properties: {
-          word: { 
-            type: "string", 
-            description: "A related word to the input word" 
+
+const getRelated = async(word,language) =>{
+  const newWordSchema3 = {
+    type: "object",
+    properties: {
+      word: { 
+        type: "string", 
+        description: "The word provided as input" 
+      },
+      translation: { 
+        type: "string", 
+        description: "The translation of the input word in "+language 
+      },
+      relatedWords: {
+        type: "array",
+        description: "A list of words related to the input word and their translations in" + language,
+        items: {
+          type: "object",
+          properties: {
+            word: { 
+              type: "string", 
+              description: "A related word to the input word" 
+            },
+            translation: { 
+              type: "string", 
+              description: "The translation of the related word in "+ language 
+            }
           },
-          translation: { 
-            type: "string", 
-            description: "The translation of the related word in Hindi" 
-          }
-        },
-        required: ["word", "translation"]
+          required: ["word", "translation"]
+        }
+      },
+      exampleSentences: {
+        type: "array",
+        description: "A list of example sentences using the input word and their translations in "+ language,
+        items: {
+          type: "object",
+          properties: {
+            sentence: { 
+              type: "string", 
+              description: "An example sentence using the input word" 
+            },
+            translation: { 
+              type: "string", 
+              description: "The translation of the example sentence in "+ language
+            }
+          },
+          required: ["sentence", "translation"]
+        }
       }
     },
-    exampleSentences: {
-      type: "array",
-      description: "A list of example sentences using the input word and their translations in Hindi",
-      items: {
-        type: "object",
-        properties: {
-          sentence: { 
-            type: "string", 
-            description: "An example sentence using the input word" 
-          },
-          translation: { 
-            type: "string", 
-            description: "The translation of the example sentence in Hindi" 
-          }
-        },
-        required: ["sentence", "translation"]
-      }
-    }
-  },
-  required: ["word", "translation", "relatedWords", "exampleSentences"]
-};
-const model3 = configuration.getGenerativeModel({
-  model: modelId,
-  generationConfig: {
-    responseMimeType: "application/json",
-    responseSchema: newWordSchema3,
-  },
-});
-const getRelated = async(word) =>{
-  const result = await model3.generateContent(`The input word is "${word}" Give me its translations. Also give me a list of example sentences with their translations in Hindi. Try to make at least 4 sentences and give at least 6 words.`);
+    required: ["word", "translation", "relatedWords", "exampleSentences"]
+  };
+  const model3 = configuration.getGenerativeModel({
+    model: modelId,
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: newWordSchema3,
+    },
+  });
+  const result = await model3.generateContent(`The input word is "${word}" Give me its translations. Also give me a list of example sentences with their translations in ${language}. Try to make at least 4 sentences and give at least 6 words.`);
   let parsedResponse;
   // Parse the Gemini API response
   try {
@@ -187,13 +189,14 @@ const getLevel = async (req, res) => {
     if (!Array.isArray(wordList)) {
       return res.status(400).json({ message: "wordList must be an array of strings" });
     }
-
+    let language = await User.findById(req.user._id).then((user)=>{return user.language})
+    console.log(language,req.user._id)
     // Generate responses for each word in wordList using both functions
     let responses = [] 
     async function getRelatedWords(wordList) {
       const responses = await Promise.all(
         wordList.map(async (word) => {
-          const t = await getRelated(word);
+          const t = await getRelated(word,language);
           return t;
         })
       );
@@ -203,7 +206,7 @@ const getLevel = async (req, res) => {
       console.log(responses);
       questions = [];
       responses.forEach((response) => {
-        let t = generateQuestions(response);
+        let t = generateQuestions(response,language);
         t.forEach((q)=>{
           questions.push(q)
         })
@@ -314,7 +317,7 @@ const getLevel = async (req, res) => {
 //     ]
 //   }
 // ]
-function generateQuestions(data) {
+function generateQuestions(data,language) {
   const { word, translation, exampleSentences, relatedWords } = data;
   let idCounter = 1;
 
@@ -383,7 +386,7 @@ function generateQuestions(data) {
     questions.push({
       id: idCounter++,
       type: 'WORD_BANK',
-      question: `Translate this to Hindi`,
+      question: `Translate this to ${language}`,
       phrase: example.sentence,
       wordBank: addRandomWords(example.translation.split(' ')),
       correctAnswer: example.translation.split(' '),
@@ -394,7 +397,7 @@ function generateQuestions(data) {
   if (flag==false){questions.push({
     id: idCounter++,
     type: 'WORD_BANK',
-    question: `Translate this to Hindi`,
+    question: `Translate this to ${language}`,
     phrase: exampleSentences[0].sentence,
     wordBank: addRandomWords(exampleSentences[0].translation.split(' ')),
     correctAnswer: exampleSentences[0].translation.split(' '),

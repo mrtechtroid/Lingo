@@ -213,7 +213,7 @@ function Component() {
         })
         .then((res) => {
           setUser(res.data);
-          if (res.data.level == -1) {
+          if (res.data.level == -2) {
             router.push("/onboarding");
           }
         })

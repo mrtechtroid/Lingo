@@ -13,10 +13,10 @@ const flag = [
     "flag_1", "flag_2", "flag_3", "flag_2"
 ]
 const proficiencyLevels = [
-  { value: 1, label: "Beginner - No prior knowledge" },
-  { value: 2, label: "Basic - Know a few words" },
-  { value: 3, label: "Intermediate - Can form simple sentences" },
-  { value: 4, label: "Advanced - Conversational skills" }
+  { value: -1, label: "Beginner - No prior knowledge" },
+  { value: 0, label: "Basic - Know a few words" },
+  { value: 1, label: "Intermediate - Can form simple sentences" },
+  { value: 2, label: "Advanced - Conversational skills" }
 ]
 
 const referralSources = [

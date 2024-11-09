@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
   hearts:{
     type: Number,
     // required: true,
-    default: 0,
+    default: 5,
     min: 0,
   },
   referrer:{
@@ -48,8 +48,8 @@ const UserSchema = new mongoose.Schema({
   level:{
     type: Number,
     // required: true,
-    default: -1,
-    min: -1,
+    default: -2,
+    min: -2,
   }
 });
 
