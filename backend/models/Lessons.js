@@ -16,6 +16,10 @@ const LessonSchema = new mongoose.Schema({
     difficulty:{
         type: Number,
         required: true,
+    },
+    next:{
+        type: String,
+        required: false,
     }
 });
 

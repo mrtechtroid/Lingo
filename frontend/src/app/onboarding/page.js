@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import axios from 'axios'
 const languages = [
-  "English","Hindi", "Spanish",
+  "English","Hindi", "Spanish", "Kannada",
 ]
 // "Punjabi"
 const flag = [
-    "flag_1", "flag_2", "flag_3", "flag_2"
+    "flag_1", "flag_2", "flag_3", "flag_2", 
 ]
 const proficiencyLevels = [
   { value: -1, label: "Beginner - No prior knowledge" },

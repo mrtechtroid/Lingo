@@ -1,6 +1,6 @@
 "use client"
 import Button from "./components/Button";
-import Image from "next/image"
+import img from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -38,7 +38,7 @@ export default function Index() {
       {/* Header */}
       <header className="relative z-10 flex justify-between items-center p-4 md:p-6">
         <Link href="/" className="text-xl md:text-2xl font-bold flex flex-row text-green-500 items-center">
-          <Image src = "/logo.png" width={40} height = {40} alt = "Logo"></Image>Lingo
+          <img src = "/logo.png" width={40} height = {40} alt = "Logo"></img>Lingo
         </Link>
         <Button variant="ghost" className="text-white hover:text-white/80">
           {/* <Globe className="mr-2 h-4 w-4" /> */}
@@ -52,7 +52,7 @@ export default function Index() {
         <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
           <div className="relative w-64 h-64 md:w-96 md:h-96">
             <div className="absolute inset-0 bg-[#1B4079] rounded-full opacity-20 blur-2xl" />
-            <Image
+            <img
               src="/earth.png"
               alt="Earth illustration"
               width={400}

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Lesson = require("../models/Lessons");
 const joi = require("joi");
 let HEARTS = {}
 const getUser = async (req, res) => {
@@ -43,8 +44,13 @@ const updateExperience = async (req, res) => {
         return res.status(400).json({ message: error.details[0].message });
       }
     try {
-      const level=req.body.level;
-      const lesson=req.body.lesson;
+      let level=req.body.level;
+      let lesson=req.body.lesson;
+
+      const lessonObj = await Lesson.findOne({_id:lesson});
+      if (!lessonObj) return res.status(404).json({ message: "Lesson not found" });
+      if (lessonObj.levels <= level) {lesson = lessonObj.next; level = -1};
+      console.log(lessonObj,level,lesson);
       const userId = req.user._id;
       // const { userId, level } = req.body;
       const updatedUser = await User.findByIdAndUpdate(userId, 

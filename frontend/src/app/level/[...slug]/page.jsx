@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Volume2, X, Heart } from 'lucide-react'
 import { useRouter,useParams } from 'next/navigation'
-import Image from 'next/image'
+import img from 'next/image'
 import axios from 'axios'
 // import {ToastContainer, toast} from 'react-toastify';
 export default function Level() {
@@ -182,15 +182,15 @@ export default function Level() {
         <h2 className="text-xl font-bold">You have completed the lesson!</h2>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Arrow Left_Red.png" width={24} height={24} alt="heart"></Image>
+            <img className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Arrow Left_Red.png" width={24} height={24} alt="heart"></img>
             <span>You have skipped {skipped} questions</span>
           </div>
           <div className="flex items-center gap-2">
-          <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Questionmark_Red.png" width={24} height={24} alt="heart"></Image>
+          <img className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Questionmark_Red.png" width={24} height={24} alt="heart"></img>
             <span>You have made {mistakes} mistakes</span>
           </div>
           <div className="flex items-center gap-2">
-          <Image className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Crown_Red.png" width={24} height={24} alt="heart"></Image>
+          <img className="w-8 h-8 bg-[#FF9600] rounded-lg" src="/icons/red/Crown_Red.png" width={24} height={24} alt="heart"></img>
             <span>You gained {xpGained} Crowns</span>
           </div>
         </div>
@@ -392,7 +392,7 @@ export default function Level() {
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b">
         <button className="p-2 hover:bg-gray-100 rounded-full" onClick={()=>router.push("/dashboard")}>
-          <Image src = "/icons/red/Arrow Left_Red.png" width={24} height = {24} alt = "X"/>
+          <img src = "/icons/red/Arrow Left_Red.png" width={24} height = {24} alt = "X"/>
           {/* <X className="w-6 h-6" /> */}
         </button>
         <div className="flex items-center gap-2">

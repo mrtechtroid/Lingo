@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Star, Book, Lock, Zap, LogOut } from "lucide-react";
-import Image from "next/image";
+import img from "next/image";
 const tabs = ["Learn", "Rankings", "Shop",];
 // const units = [
 //   {
@@ -356,21 +356,21 @@ function Component() {
             {leaderboardData &&
               leaderboardData.map((player, index) => (
                 <div
-                  key={player.name}
+                  key={player.name+index}
                   className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                 >
                   <div className="flex items-center gap-4">
                     <span className="text-lg font-bold">{index + 1}</span>
-                    <Image className="w-10 h-10 bg-gray-200 rounded-full" key = {player.name} src={'https://api.dicebear.com/9.x/pixel-art/png?seed='+player.name+"/"} width={24} height = {24} alt = "heart"></Image>
+                    <img className="w-10 h-10 bg-gray-200 rounded-full" key = {player.name} src={'https://api.dicebear.com/9.x/pixel-art/png?seed='+player.name+"/"} width={24} height = {24} alt = "heart"></img>
                     <span className="font-medium">{player.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                  <Image
+                  <img
                 src="/icons/red/Crown_Red.png"
                 width={24}
                 height={24}
                 alt="crown"
-              ></Image>
+              ></img>
                     <span className="font-bold">{player.experience}</span>
                   </div>
                 </div>
@@ -435,15 +435,15 @@ function Component() {
             }`}
           >
             {tab === "Learn" && (
-              <Image
-                src="/icons/green/house_green.png"
+              <img
+                src="/icons/Green/House_Green.png"
                 width={24}
                 height={24}
                 alt="home"
               />
             )}
             {tab === "Rankings" && (
-              <Image
+              <img
                 src="/icons/green/Letter R Yellow_Green.png"
                 width={24}
                 height={24}
@@ -451,16 +451,16 @@ function Component() {
               />
             )}
             {tab === "Chat" && (
-              <Image
+              <img
                 src="/icons/green/Letter R Yellow_Green.png"
                 width={24}
                 height={24}
                 alt="chat"
               />
             )}
-            {/* {tab === 'Discuss' && <Image src="/users.png" width={24} height={24} alt="users" />} */}
+            {/* {tab === 'Discuss' && <img src="/users.png" width={24} height={24} alt="users" />} */}
             {tab === "Shop" && (
-              <Image
+              <img
                 src="/icons/green/Handbag_Green.png"
                 width={24}
                 height={24}
@@ -468,7 +468,7 @@ function Component() {
               />
             )}
             {tab === "Profile" && (
-              <Image
+              <img
                 src="/icons/green/Contacts_Green.png"
                 width={24}
                 height={24}
@@ -484,7 +484,7 @@ function Component() {
           onClick={signOut}
           className={`flex items-center gap-3 p-3 rounded-xl 'hover:bg-gray-100 text-gray-500'`}
         >
-          <Image
+          <img
             src="/icons/green/power_green.png"
             width={24}
             height={24}
@@ -509,22 +509,22 @@ function Component() {
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <Image
+              <img
                 src="/icons/red/Heart_Red.png"
                 width={24}
                 height={24}
                 alt="heart"
-              ></Image>
+              ></img>
               {/* <div className="w-6 h-6 rounded-full bg-gray-200" /> */}
               {user && <span>{user.hearts}</span>}
             </div>
             <div className="flex items-center gap-1">
-              <Image
+              <img
                 src="/icons/red/Crown_Red.png"
                 width={24}
                 height={24}
                 alt="crown"
-              ></Image>
+              ></img>
               {user && <span>{user.experience}</span>}
             </div>
           </div>
@@ -578,7 +578,7 @@ function Component() {
             
             <h2 className="text-2xl font-bold mb-4 text-center">Profile</h2>
             <div className="mb-6"> 
-            <center><Image className="w-24 h-24 rounded-full border" src={"https://api.dicebear.com/9.x/pixel-art/png?seed="+user.name} width={24} height = {24} alt = "heart"></Image>
+            <center><img className="w-24 h-24 rounded-full border" src={"https://api.dicebear.com/9.x/pixel-art/png?seed="+user.name} width={24} height = {24} alt = "heart"></img>
             </center>
               <p className="text-gray-600 mb-4 text-center">
                 Name: {user.name}

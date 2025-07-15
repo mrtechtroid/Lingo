@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
+import img from 'next/image';
 import Button from '../components/Button';
 import Link from 'next/link';
 const Register = () => {
@@ -33,7 +33,7 @@ const Register = () => {
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex justify-center mb-6">
-            <Image
+            <img
               src="/logo.png"
               alt="Duolingo Logo"
               width={64}
